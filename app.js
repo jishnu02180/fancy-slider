@@ -23,7 +23,7 @@ const KEY = '15674931-a9d714b6e9d654524df198e00&q';
 
 // show images 
 const showImages = (images) => {
-  console.log('data response',images);
+  //console.log('data response',images);
   imagesArea.style.display = 'block';
   gallery.innerHTML = '';
   // show gallery title
@@ -32,9 +32,7 @@ const showImages = (images) => {
     let div = document.createElement('div');
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
     div.innerHTML = ` <img class="img-size img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
-    //toggleImage("img-thumbnail", "${image.webformatURL}");
     gallery.appendChild(div)
-    console.log('toogle remove',"yes");
     toggleSpinner(false);
   })
 
@@ -46,24 +44,16 @@ const getImages = (query) => {
     .then(response => response.json())
     .then(data => showImages(data.hits))
     .catch(err => console.log(err))
-
-    // fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
-    // .then(response => response.json())
-    // .then(data => console.log('data',data))
-    // .catch(err => console.log(err))
 }
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
   element.classList.add('added');
-  console.log('image toggle',element.classList);
-  console.log('image url',img);
  
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
-    //toggleImage(element);
   } else {
     //alert('Hey, Already added !')
      toggleImage(element,img);
