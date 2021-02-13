@@ -32,6 +32,7 @@ const showImages = (images) => {
     let div = document.createElement('div');
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
     div.innerHTML = ` <img class="img-size img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
+    //toggleImage("img-thumbnail", "${image.webformatURL}");
     gallery.appendChild(div)
     console.log('toogle remove',"yes");
     toggleSpinner(false);
@@ -57,13 +58,15 @@ const selectItem = (event, img) => {
   let element = event.target;
   element.classList.add('added');
   console.log('image toggle',element.classList);
+  console.log('image url',img);
  
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
+    //toggleImage(element);
   } else {
     //alert('Hey, Already added !')
-    toggleImage(element);
+     toggleImage(element,img);
   }
 }
 var timer
@@ -71,6 +74,13 @@ const createSlider = () => {
   // check slider image length
   if (sliders.length < 2) {
     alert('Select at least 2 image.')
+    return;
+  }
+
+  const duration = document.getElementById('duration').value || 1000;
+  console.log('duration time',duration);
+  if(duration < 0){
+    alert('Please set a positive value for duration');
     return;
   }
   // crate slider previous next area
@@ -86,12 +96,7 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  const duration = document.getElementById('duration').value || 1000;
-  console.log('duration time',duration);
-  if(duration < 0){
-    alert('Please set a positive value for duration');
-    return;
-  }
+  
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -148,13 +153,14 @@ sliderBtn.addEventListener('click', function () {
 const toggleSpinner = show=>{
   const spinner = document.getElementById('loading-spinner');
    if(show){
-    spinner.classList.remove('d-none');
+      spinner.classList.remove('d-none');
    } else{
-    spinner.classList.add('d-none');
+      spinner.classList.add('d-none');
    }
   //spinner.classList.toggle('d-none');
 }
 
-const toggleImage = id =>{
+const toggleImage = (id,img)=>{
       id.classList.toggle('added');
+      sliders.pop(img);
 }
