@@ -147,7 +147,7 @@ const toggleSpinner = show=>{
    } else{
       spinner.classList.add('d-none');
    }
-  //spinner.classList.toggle('d-none');
+  // spinner.classList.toggle('d-none');
 }
 
 const toggleImage = (id,img)=>{
