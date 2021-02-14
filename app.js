@@ -69,8 +69,8 @@ const createSlider = () => {
 
   const duration = document.getElementById('duration').value || 1000;
   console.log('duration time',duration);
-  if(duration < 0){
-    alert('Please set a positive value for duration');
+  if(duration < 1000){
+    alert('Please input a positive value. Value should be 1000 or higher');
     return;
   }
   // crate slider previous next area
@@ -150,7 +150,10 @@ const toggleSpinner = show=>{
   // spinner.classList.toggle('d-none');
 }
 
-const toggleImage = (id,img)=>{
-      id.classList.toggle('added');
-      sliders.pop(img);
+const toggleImage = (element,img)=>{
+      element.classList.toggle('added');
+      const index = sliders.indexOf(img);
+      if (index > -1) {
+          sliders.splice(index, 1);
+      }
 }
